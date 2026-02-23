@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTicketRequest;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -62,23 +63,15 @@ class TicketController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreTicketRequest $request): RedirectResponse
     {
-        // Validasi input
-        // Jika gagal, otomatis redirect back dengan error messages
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|min:10',
-            'priority' => 'required|in:low,medium,high',
-        ]);
-
         // Tambahkan user_id dari user yang sedang login
         // Untuk sementara, kita hardcode user_id = 1 (untuk testing)
         // Nanti di materi Auth akan diganti dengan auth()->id()
         $validated['user_id'] = auth()->id() ?? 1;
 
         // Simpan tiket baru
-        $ticket = Ticket::create($validated);
+        $ticket = Ticket::create($request->validated());
 
         // Redirect ke halaman index dengan pesan sukses
         return redirect()
@@ -98,7 +91,7 @@ class TicketController extends Controller
     {
         // Laravel otomatis mencari Ticket berdasarkan ID dari URL
         // Jika tidak ditemukan, otomatis return 404
-        
+
         // Load relasi user
         $ticket->load('user');
 
@@ -129,16 +122,9 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket): RedirectResponse
     {
-        // Validasi input
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|min:10',
-            'status' => 'required|in:open,in_progress,closed',
-            'priority' => 'required|in:low,medium,high',
-        ]);
-
         // Update tiket
-        $ticket->update($validated);
+        $ticket = Ticket::update($request->validated());
+
 
         // Redirect ke halaman detail dengan pesan sukses
         return redirect()

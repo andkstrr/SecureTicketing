@@ -136,7 +136,28 @@
                                     <i class="bi bi-lock"></i> Secure
                                 </a></li>
                         </ul>
-                    </li>
+
+                        {{-- Input Validation  --}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ request()->routeIs('validation-lab.*') ? 'active' : '' }}"
+                                href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-check-circle"></i> Input Validation
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('validation-lab.index') }}">
+                                        <i class="bi bi-house"></i> Dashboard
+                                    </a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{{ route('validation-lab.vulnerable') }}">
+                                        <i class="bi bi-shield-exclamation text-danger"></i> Vulnerable Form
+                                    </a></li>
+                                <li><a class="dropdown-item" href="{{ route('validation-lab.secure') }}">
+                                        <i class="bi bi-shield-check text-success"></i> Secure Form
+                                    </a></li>
+                            </ul>
+                        </li>
                 </ul>
 
                 <ul class="navbar-nav">
@@ -181,7 +202,7 @@
         @endif
 
         {{-- Validation Errors --}}
-        @if ($errors->any())
+        {{-- @if ($errors->any())
             <div class="alert alert-danger">
                 <i class="bi bi-exclamation-triangle"></i> <strong>Terjadi kesalahan:</strong>
                 <ul class="mb-0 mt-2">
@@ -190,7 +211,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif --}}
 
         {{-- Page Content --}}
         @yield('content')
