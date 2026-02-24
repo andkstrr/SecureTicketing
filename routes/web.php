@@ -5,6 +5,8 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\DemoBladeController;
 use App\Http\Controllers\XSSLabController;
 use App\Http\Controllers\ValidationLabController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\SecurityTestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +74,42 @@ Route::prefix('demo-blade')->name('demo-blade.')->group(function () {
     Route::get('/components', [DemoBladeController::class, 'components'])->name('components');
     Route::get('/includes', [DemoBladeController::class, 'includes'])->name('includes');
     Route::get('/stacks', [DemoBladeController::class, 'stacks'])->name('stacks');
+});
+
+// Store comment (POST)
+Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])
+    ->name('comments.store');
+
+// Delete comment (DELETE)
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+    ->name('comments.destroy');
+
+// Update comment (optional) - (PUT/PATCH)
+Route::put('/comments/{comment}', [CommentController::class, 'update'])
+    ->name('comments.update');
+
+// =========================================
+// SECURITY TESTING ROUTES
+// =========================================
+// Dashboard untuk testing keamanan aplikasi
+// PENTING: Jangan aktifkan di production!
+
+Route::prefix('security-testing')->name('security-testing.')->group(function () {
+    // Dashboard index
+    Route::get('/', [SecurityTestController::class, 'index'])->name('index');
+    
+    // XSS Testing
+    Route::get('/xss', [SecurityTestController::class, 'xssTest'])->name('xss');
+    
+    // CSRF Testing
+    Route::get('/csrf', [SecurityTestController::class, 'csrfTest'])->name('csrf');
+    Route::post('/csrf', [SecurityTestController::class, 'csrfTestPost'])->name('csrf.post');
+    
+    // Security Headers Testing
+    Route::get('/headers', [SecurityTestController::class, 'headersTest'])->name('headers');
+    
+    // Audit Checklist
+    Route::get('/audit', [SecurityTestController::class, 'auditChecklist'])->name('audit');
 });
 
 // XSS Lab

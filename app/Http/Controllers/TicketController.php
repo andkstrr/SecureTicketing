@@ -65,13 +65,12 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request): RedirectResponse
     {
-        // Tambahkan user_id dari user yang sedang login
-        // Untuk sementara, kita hardcode user_id = 1 (untuk testing)
-        // Nanti di materi Auth akan diganti dengan auth()->id()
-        $validated['user_id'] = auth()->id() ?? 1;
-
         // Simpan tiket baru
-        $ticket = Ticket::create($request->validated());
+        // TODO: Tambahkan user_id setelah fitur auth diimplementasi
+        // $ticket = Ticket::create($request->validated());
+        $validated = $request->validated();
+        $validated['user_id'] = auth()->id() ?? 1;
+        Ticket::create($validated);
 
         // Redirect ke halaman index dengan pesan sukses
         return redirect()
@@ -123,8 +122,7 @@ class TicketController extends Controller
     public function update(Request $request, Ticket $ticket): RedirectResponse
     {
         // Update tiket
-        $ticket = Ticket::update($request->validated());
-
+        $ticket->update($request->validated());
 
         // Redirect ke halaman detail dengan pesan sukses
         return redirect()

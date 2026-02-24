@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
+            // user_id nullable karena belum ada fitur login
+            // TODO: Ubah ke non-nullable setelah fitur auth diimplementasi
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->text('content');
             $table->timestamps();
         });
     }

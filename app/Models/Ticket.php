@@ -25,11 +25,12 @@ class Ticket extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
         'title',
         'description',
         'status',
         'priority',
+        'user_id'
+        // TODO: Tambahkan 'user_id' setelah fitur auth diimplementasi
     ];
 
     /**

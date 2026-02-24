@@ -137,6 +137,33 @@
                                 </a></li>
                         </ul>
 
+                         {{-- Security Testing (Hari 5) - NEW --}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ request()->routeIs('security-testing.*') ? 'active' : '' }}" 
+                               href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-shield-shaded"></i> Security Testing
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('security-testing.index') }}">
+                                    <i class="bi bi-house"></i> Dashboard
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ route('security-testing.xss') }}">
+                                    <i class="bi bi-shield-exclamation text-danger"></i> XSS Test
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('security-testing.csrf') }}">
+                                    <i class="bi bi-key text-primary"></i> CSRF Test
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('security-testing.headers') }}">
+                                    <i class="bi bi-server text-info"></i> Headers Test
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ route('security-testing.audit') }}">
+                                    <i class="bi bi-clipboard-check text-warning"></i> Audit Checklist
+                                </a></li>
+                            </ul>
+                        </li>
+
                         {{-- Input Validation  --}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle {{ request()->routeIs('validation-lab.*') ? 'active' : '' }}"

@@ -18,9 +18,9 @@ return new class extends Migration
             // Primary key auto-increment
             $table->id();
             
-            // Foreign key ke tabel users
-            // onDelete('cascade') = jika user dihapus, tiketnya juga terhapus
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            // Foreign key ke tabel users (nullable karena belum ada fitur login)
+            // TODO: Ubah ke non-nullable setelah fitur auth diimplementasi
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             
             // Judul tiket - wajib diisi, max 255 karakter
             $table->string('title');

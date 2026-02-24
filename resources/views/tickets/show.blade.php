@@ -103,7 +103,7 @@
                             pada {{ $ticket->created_at->format('d M Y, H:i') }}
                         </small>
                         
-                        @if($ticket->user_id === auth()->id())
+                        {{-- Tombol Edit & Hapus (tanpa auth check karena belum ada fitur login) --}}
                             <div class="btn-group btn-group-sm">
                                 <a href="{{ route('tickets.edit', $ticket) }}" 
                                    class="btn btn-outline-primary">
@@ -120,7 +120,6 @@
                                     </button>
                                 </form>
                             </div>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -218,8 +217,7 @@
                                     </div>
                                 </div>
                                 
-                                {{-- Delete Button (hanya untuk owner atau admin) --}}
-                                @if(auth()->id() === $comment->user_id || (auth()->user()->is_admin ?? false))
+                                {{-- Delete Button (tanpa auth check karena belum ada fitur login) --}}
                                     <form action="{{ route('comments.destroy', $comment) }}" 
                                           method="POST"
                                           onsubmit="return confirm('Hapus komentar ini?')">
@@ -231,7 +229,6 @@
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
-                                @endif
                             </div>
                             
                             {{-- Comment Content --}}

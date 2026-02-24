@@ -55,6 +55,7 @@ class StoreTicketRequest extends FormRequest
             
             // Set default priority jika tidak ada
             'priority' => $this->priority ?? 'medium',
+            'user_id' => $this->user_id ?? 1,
         ]);
     }
 
