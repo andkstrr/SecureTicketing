@@ -8,6 +8,7 @@ use App\Http\Controllers\ValidationLabController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SecurityTestController;
 use App\Http\Controllers\CsrfLabController;
+use App\Http\Controllers\SqliLabController;
 
 /*
 |--------------------------------------------------------------------------
@@ -204,3 +205,61 @@ Route::post('/csrf-lab/vulnerable-transfer', [CsrfLabController::class, 'vulnera
 // Route untuk demo PROTECTED transfer (DENGAN CSRF - akan return 419 jika tanpa token)
 Route::post('/csrf-lab/protected-transfer', [CsrfLabController::class, 'protectedTransfer'])
     ->name('csrf-lab.protected-transfer');
+
+
+// ============================================
+// SQL INJECTION LAB ROUTES
+// ============================================
+Route::prefix('sqli-lab')->name('sqli-lab.')->group(function () {
+
+    // Menu utama
+    Route::get('/', [SqliLabController::class, 'index'])->name('index');
+
+    // Halaman edukasi
+    Route::get('/how-it-works', [SqliLabController::class, 'howItWorks'])->name('how-it-works');
+    Route::get('/cheatsheet', [SqliLabController::class, 'cheatsheet'])->name('cheatsheet');
+
+    // ============================================
+    // VULNERABLE ENDPOINTS (UNTUK DEMO)
+    // ============================================
+    // PERINGATAN: Endpoint ini SENGAJA VULNERABLE!
+    // Hanya untuk pembelajaran - JANGAN gunakan di production!
+
+    // Vulnerable Search - String concatenation
+    Route::get('/vulnerable-search', [SqliLabController::class, 'vulnerableSearch'])
+        ->name('vulnerable-search');
+
+    // Vulnerable Login - Authentication bypass
+    Route::get('/vulnerable-login', [SqliLabController::class, 'vulnerableLogin'])
+        ->name('vulnerable-login');
+    Route::post('/vulnerable-login', [SqliLabController::class, 'vulnerableLoginSubmit'])
+        ->name('vulnerable-login-submit');
+
+        // Blind SQL Injection Demo
+    Route::get('/blind-sqli', [SqliLabController::class, 'blindSqli'])
+        ->name('blind-sqli');
+    Route::post('/blind-sqli/boolean', [SqliLabController::class, 'blindSqliBooleanCheck'])
+        ->name('blind-sqli-boolean');
+    Route::post('/blind-sqli/time', [SqliLabController::class, 'blindSqliTimeCheck'])
+        ->name('blind-sqli-time');
+
+    // ============================================
+    // SECURE ENDPOINTS (BEST PRACTICE)
+    // ============================================
+
+    // Secure Search - 4 metode aman
+    Route::get('/secure-search', [SqliLabController::class, 'secureSearch'])
+        ->name('secure-search');
+
+    // ============================================
+    // UTILITY ROUTES
+    // ============================================
+
+    // Seed demo data
+    Route::get('/seed-data', [SqliLabController::class, 'seedData'])
+        ->name('seed');
+
+    // Reset data
+    Route::get('/reset-data', [SqliLabController::class, 'resetData'])
+        ->name('reset');
+});

@@ -1,132 +1,200 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    <title>@yield('title', 'Secure Ticketing') - SMK Wikrama Bogor</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .navbar-brand {
-            font-weight: bold;
-        }
-        .card {
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        }
-        .footer {
-            background-color: #212529;
-            color: #fff;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-    </style>
-    
-    @stack('styles')
-</head>
-<body>
-    {{-- ============================================ --}}
-    {{-- NAVIGATION --}}
-    {{-- ============================================ --}}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                <i class="bi bi-shield-lock"></i> Secure Ticketing
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('tickets.*') ? 'active' : '' }}" 
-                           href="{{ route('tickets.index') }}">
-                            <i class="bi bi-ticket-detailed"></i> Tickets
+@extends('layouts.app')
+
+@section('title', 'Home')
+
+@section('content')
+<div class="container-fluid py-4">
+    {{-- Hero Section --}}
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 bg-primary text-white shadow-lg" style="background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 50%, #0a58ca 100%);">
+                <div class="card-body p-5 text-center">
+                    <i class="bi bi-shield-lock display-1 mb-3"></i>
+                    <h1 class="display-5 fw-bold mb-3">Secure Ticketing Lab</h1>
+                    <p class="lead mb-4 opacity-75">
+                        Platform pembelajaran keamanan web untuk SMK Wikrama Bogor
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="{{ route('tickets.index') }}" class="btn btn-light btn-lg px-4">
+                            <i class="bi bi-ticket-detailed me-2"></i> Lihat Tickets
                         </a>
-                    </li>
-                </ul>
-                
-                <ul class="navbar-nav">
-                    {{-- Untuk sementara tampilkan user statis --}}
-                    {{-- Nanti di materi Auth akan diganti dengan @auth/@guest --}}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" 
-                           data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> User Demo
+                        <a href="{{ route('security-testing.index') }}" class="btn btn-outline-light btn-lg px-4">
+                            <i class="bi bi-shield-shaded me-2"></i> Security Testing
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
 
-    {{-- ============================================ --}}
-    {{-- MAIN CONTENT --}}
-    {{-- ============================================ --}}
-    <main class="container py-4">
-        {{-- Flash Messages --}}
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle"></i> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle"></i> {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
-        {{-- Validation Errors --}}
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <i class="bi bi-exclamation-triangle"></i> <strong>Terjadi kesalahan:</strong>
-                <ul class="mb-0 mt-2">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        {{-- Page Content --}}
-        @yield('content')
-    </main>
-
-    {{-- ============================================ --}}
-    {{-- FOOTER --}}
-    {{-- ============================================ --}}
-    <footer class="footer">
-        <div class="container text-center">
-            <p class="mb-1">
-                <i class="bi bi-shield-lock"></i> Secure Ticketing System
-            </p>
-            <p class="mb-0 text-muted">
-                &copy; {{ date('Y') }} Bootcamp Secure Coding - SMK Wikrama Bogor
-            </p>
+    {{-- Quick Access Cards --}}
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4 class="fw-semibold mb-3">
+                <i class="bi bi-lightning me-2 text-warning"></i> Quick Access
+            </h4>
         </div>
-    </footer>
+    </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    @stack('scripts')
-</body>
-</html>
+    <div class="row g-4 mb-5">
+        {{-- Blade Templating --}}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-info bg-opacity-10 p-3 me-3">
+                            <i class="bi bi-code-slash text-info fs-4"></i>
+                        </div>
+                        <h5 class="card-title mb-0">Blade Templating</h5>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Pelajari template engine Laravel Blade: directives, components, includes, dan stacks.
+                    </p>
+                    <a href="{{ route('demo-blade.index') }}" class="btn btn-outline-info btn-sm">
+                        Buka Demo <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- XSS Lab --}}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-danger bg-opacity-10 p-3 me-3">
+                            <i class="bi bi-shield-exclamation text-danger fs-4"></i>
+                        </div>
+                        <h5 class="card-title mb-0">XSS Lab</h5>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Eksplor Cross-Site Scripting: Reflected, Stored, dan DOM-based XSS attacks.
+                    </p>
+                    <a href="{{ route('xss-lab.index') }}" class="btn btn-outline-danger btn-sm">
+                        Buka Lab <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Validation Lab --}}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
+                            <i class="bi bi-check-circle text-success fs-4"></i>
+                        </div>
+                        <h5 class="card-title mb-0">Input Validation</h5>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Bandingkan form tanpa validasi vs dengan validasi Laravel yang proper.
+                    </p>
+                    <a href="{{ route('validation-lab.index') }}" class="btn btn-outline-success btn-sm">
+                        Buka Lab <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- CSRF Lab --}}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">
+                            <i class="bi bi-key text-warning fs-4"></i>
+                        </div>
+                        <h5 class="card-title mb-0">CSRF Lab</h5>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Pelajari Cross-Site Request Forgery dan proteksi dengan CSRF token.
+                    </p>
+                    <a href="{{ route('csrf-lab.index') }}" class="btn btn-outline-warning btn-sm">
+                        Buka Lab <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- SQLI Lab --}}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary bg-opacity-10 p-3 me-3">
+                            <i class="bi bi-database text-secondary fs-4"></i>
+                        </div>
+                        <h5 class="card-title mb-0">SQL Injection Lab</h5>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Eksplor SQL Injection: teknik serangan dan cara mencegahnya dengan prepared statements.
+                    </p>
+                    <a href="{{ route('sqli-lab.index') }}" class="btn btn-outline-secondary btn-sm">
+                        Buka Lab <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Security Testing --}}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
+                            <i class="bi bi-shield-shaded text-primary fs-4"></i>
+                        </div>
+                        <h5 class="card-title mb-0">Security Testing</h5>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Tool untuk menguji keamanan: XSS, CSRF, Security Headers & Audit.
+                    </p>
+                    <a href="{{ route('security-testing.index') }}" class="btn btn-outline-primary btn-sm">
+                        Buka Tools <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- Info Section --}}
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 bg-light">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h5 class="fw-semibold mb-2">
+                                <i class="bi bi-info-circle me-2 text-primary"></i> Tentang Platform Ini
+                            </h5>
+                            <p class="text-muted mb-0 small">
+                                Secure Ticketing Lab adalah platform edukasi untuk mempelajari keamanan aplikasi web.
+                                Dibangun dengan Laravel 12 dan Bootstrap 5, platform ini menyediakan berbagai lab
+                                interaktif untuk memahami serangan web seperti XSS, CSRF, SQL Injection, serta
+                                cara mengamankannya. <strong>Gunakan hanya untuk pembelajaran!</strong>
+                            </p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                            <span class="badge bg-primary me-1">Laravel 12</span>
+                            <span class="badge bg-secondary me-1">Bootstrap 5</span>
+                            <span class="badge bg-info">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+</style>
+@endsection
