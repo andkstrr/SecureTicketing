@@ -28,6 +28,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Check if there's a custom redirect from lab login pages
+        if ($request->has('redirect_to')) {
+            return redirect($request->input('redirect_to'));
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
