@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('xss_lab_comments', function (Blueprint $table) {
             $table->id();
+            $table->string('author_name');
+            $table->text('content');
+            $table->unsignedBigInteger('ticket_id');
             $table->timestamps();
         });
     }

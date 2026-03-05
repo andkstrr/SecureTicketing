@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SqliLabUser extends Model
 {
-    //
+    protected $fillable = [
+        'email',
+        'username',
+        'password',
+        'role',
+    ];
 }

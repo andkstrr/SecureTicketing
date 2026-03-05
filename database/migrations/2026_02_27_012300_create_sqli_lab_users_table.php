@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('sqli_lab_users', function (Blueprint $table) {
             $table->id();
+            $table->string('email');
+            $table->string('username');
+            $table->string('password');
+            $table->string('role');
             $table->timestamps();
         });
     }
