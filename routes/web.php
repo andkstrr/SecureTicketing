@@ -535,6 +535,19 @@ Route::middleware('auth')->prefix('bac-lab')->name('bac-lab.')->group(function (
 });
 
 // ============================================================================
+// Error Handling Demo (Minggu 5 Hari 2 - Error Handling & Information Disclosure)
+// ============================================================================
+
+Route::get('/error-handling-demo', function () {
+    return view('error-handling-demo.index');
+})->name('error-handling-demo');
+
+// ============================================================================
+// Secure Auth Routes (Laravel Breeze)
+// ============================================================================
+// require __DIR__.'/auth.php';
+
+// ============================================================================
 // Secure Auth Routes
 // ============================================================================
 use App\Http\Controllers\Auth\LoginController;

@@ -477,8 +477,7 @@
                     </a>
                 </li>
 
-                {{-- BLADE TEMPLATING --}}
-                <li class="nav-section">Blade Templating</li>
+                <li class="nav-section">Demo</li>
 
                 {{-- Demo Blade --}}
                 <li class="nav-item">
@@ -513,6 +512,13 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                {{-- Error Handling Demo - Minggu 5 Hari 2 --}}
+                <li class="nav-item">
+                    <a href="{{ route('error-handling-demo') }}" class="nav-link {{ request()->routeIs('error-handling-demo') ? 'active' : '' }}">
+                        <i class="bi bi-exclamation-triangle"></i> Error Handling Demo
+                    </a>
                 </li>
 
                 {{-- SECURITY LABS --}}
