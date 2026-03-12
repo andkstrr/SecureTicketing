@@ -14,6 +14,8 @@ use App\Http\Controllers\VulnerableAuth\VulnerableLoginController;
 use App\Http\Controllers\VulnerableAuth\VulnerableRegisterController;
 use App\Http\Controllers\XSSLabController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileUpload\SecureUploadController;
+use App\Http\Controllers\FileUpload\VulnerableUploadController;
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -546,6 +548,80 @@ Route::get('/error-handling-demo', function () {
 // Secure Auth Routes (Laravel Breeze)
 // ============================================================================
 // require __DIR__.'/auth.php';
+
+Route::prefix('file-upload-lab')->name('file-upload-lab.')->group(function () {
+    // Lab Index
+    Route::get('/', function () {
+        return view('file-upload-lab.index');
+    })->name('index');
+
+    // Overview/Materi (Logging & Upload Basics)
+    Route::get('/overview/{section?}', function ($section = 'logging') {
+        $validSections = ['logging', 'upload-basics'];
+        if (! in_array($section, $validSections)) {
+            $section = 'logging';
+        }
+
+        return view('file-upload-lab.overview', compact('section'));
+    })->name('overview');
+
+    // =============================================
+    // VULNERABLE UPLOAD LAB (Educational Purposes)
+    // =============================================
+    Route::prefix('vulnerable')->name('vulnerable.')->group(function () {
+        // Lab index
+        Route::get('/', [VulnerableUploadController::class, 'index'])->name('index');
+
+        // Level 1: No validation
+        Route::match(['get', 'post'], '/level1', [VulnerableUploadController::class, 'level1'])
+            ->name('level1');
+
+        // Level 2: Client-side only
+        Route::match(['get', 'post'], '/level2', [VulnerableUploadController::class, 'level2'])
+            ->name('level2');
+
+        // Level 3: Blacklist bypass
+        Route::match(['get', 'post'], '/level3', [VulnerableUploadController::class, 'level3'])
+            ->name('level3');
+
+        // Level 4: MIME type bypass
+        Route::match(['get', 'post'], '/level4', [VulnerableUploadController::class, 'level4'])
+            ->name('level4');
+
+        // Level 5: Magic bytes bypass
+        Route::match(['get', 'post'], '/level5', [VulnerableUploadController::class, 'level5'])
+            ->name('level5');
+
+        // View uploaded files
+        Route::get('/files', [VulnerableUploadController::class, 'listFiles'])->name('files');
+
+        // Clear all uploads
+        Route::delete('/clear', [VulnerableUploadController::class, 'clearUploads'])->name('clear');
+    });
+
+    // =============================================
+    // SECURE UPLOAD IMPLEMENTATION
+    // =============================================
+    Route::prefix('secure')->name('secure.')->group(function () {
+        // Secure upload demo
+        Route::get('/', [SecureUploadController::class, 'index'])->name('index');
+
+        // Upload file
+        Route::post('/upload', [SecureUploadController::class, 'upload'])->name('upload');
+
+        // Serve file (via controller)
+        Route::get('/file/{filename}', [SecureUploadController::class, 'serve'])->name('serve');
+
+        // Download file
+        Route::get('/download/{filename}', [SecureUploadController::class, 'download'])->name('download');
+
+        // Delete file
+        Route::delete('/file/{filename}', [SecureUploadController::class, 'delete'])->name('delete');
+
+        // Clear all
+        Route::delete('/clear', [SecureUploadController::class, 'clearAll'])->name('clear');
+    });
+});
 
 // ============================================================================
 // Secure Auth Routes

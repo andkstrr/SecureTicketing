@@ -823,6 +823,41 @@
                     </ul>
                 </li>
 
+                {{-- File Upload Lab - Minggu 5 Hari 3 & 4 --}}
+                <li class="nav-item">
+                    <a href="#fileUploadLab" class="nav-link {{ request()->routeIs('file-upload-lab.*') ? '' : 'collapsed' }}"
+                       data-bs-toggle="collapse" aria-expanded="{{ request()->routeIs('file-upload-lab.*') ? 'true' : 'false' }}">
+                        <i class="bi bi-cloud-upload"></i> File Upload Lab
+                    </a>
+                    <ul class="collapse nav-collapse {{ request()->routeIs('file-upload-lab.*') ? 'show' : '' }}" id="fileUploadLab">
+                        <li class="nav-item">
+                            <a href="{{ route('file-upload-lab.index') }}" class="nav-link">
+                                <i class="bi bi-house"></i> Overview
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('file-upload-lab.overview', 'logging') }}" class="nav-link text-info">
+                                <i class="bi bi-journal-text"></i> Logging Materi
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('file-upload-lab.overview', 'upload-basics') }}" class="nav-link text-info">
+                                <i class="bi bi-book"></i> Upload Basics
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('file-upload-lab.vulnerable.index') }}" class="nav-link text-danger">
+                                <i class="bi bi-bug"></i> Vulnerable Lab
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('file-upload-lab.secure.index') }}" class="nav-link text-success">
+                                <i class="bi bi-shield-check"></i> Secure Upload
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- TOOLS --}}
                 <li class="nav-section">Tools</li>
 
