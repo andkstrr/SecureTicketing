@@ -1,0 +1,21 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+
+parameters:
+    # folder yang dianalisis
+    paths: 
+        - app/
+        - config/
+        - database/
+        - routes/
+    
+    # level analisis (0-9, semakin tinggi semakin strict)
+    level: 5
+
+    # folder yang dikecualikan
+    excludePaths:
+        - app/Console/Kernel.php (?)
+
+    # error yang diabaikan
+    ignoreErrors:
+        # - '#some error patterns#'

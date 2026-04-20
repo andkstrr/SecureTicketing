@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class XssLabComment extends Model
 {
-    //
+    protected $fillable = [
+        'ticket_id',
+        'author_name',
+        'content',
+    ];
 }
