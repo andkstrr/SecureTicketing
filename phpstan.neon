@@ -2,13 +2,15 @@ includes:
     - ./vendor/larastan/larastan/extension.neon
 
 parameters:
+    parallel:
+            maximumNumberOfProcesses: 1
     # folder yang dianalisis
-    paths: 
+    paths:
         - app/
         - config/
         - database/
         - routes/
-    
+
     # level analisis (0-9, semakin tinggi semakin strict)
     level: 5
 

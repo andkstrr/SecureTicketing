@@ -11,7 +11,7 @@ use Illuminate\View\View;
 
 /**
  * Login Controller - SECURE IMPLEMENTATION
- * 
+ *
  * Controller ini mengimplementasikan best practices:
  * 1. Rate limiting via LoginRequest
  * 2. Session regeneration setelah login
@@ -32,7 +32,7 @@ class LoginController extends Controller
 
     /**
      * Handle an incoming authentication request.
-     * 
+     *
      * SECURITY FEATURES:
      * 1. LoginRequest handles validation + rate limiting
      * 2. Session regeneration mencegah session fixation
@@ -51,7 +51,7 @@ class LoginController extends Controller
 
     /**
      * Destroy an authenticated session.
-     * 
+     *
      * SECURITY FEATURES:
      * 1. Session invalidation
      * 2. Token regeneration
@@ -75,15 +75,21 @@ class LoginController extends Controller
      */
     public function status(Request $request): View
     {
-        $loginAttempts = \App\Models\LoginAttempt::secure()
-            ->where('email', Auth::user()?->email ?? $request->input('email', ''))
-            ->latest()
-            ->take(10)
-            ->get();
+        $user = Auth::user();
+        $email = $user ? $user->email : $request->input('email', '');
 
-        return view('auth.status', [
-            'attempts' => $loginAttempts,
-            'isSecure' => true,
-        ]);
+        $loginAttempts = \App\Models\LoginAttempt::secure()
+        ->where('email', $email)
+        ->latest()
+        ->take(10)
+        ->get();
+
+        /** @var view-string $view */
+    $view = 'auth.status';
+
+    return view($view, [
+        'attempts' => $loginAttempts,
+        'isSecure' => true,
+    ]);
     }
 }

@@ -24,7 +24,7 @@ class User extends Authenticatable
      * SECURITY: Hanya field yang boleh diisi via mass assignment
      * Role ditambahkan untuk RBAC (Minggu 4 Hari 2)
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -39,7 +39,7 @@ class User extends Authenticatable
      * SECURITY: Password dan remember_token tidak akan muncul
      * saat model di-convert ke array/JSON
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',

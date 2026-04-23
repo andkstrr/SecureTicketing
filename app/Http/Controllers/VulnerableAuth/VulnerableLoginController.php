@@ -11,10 +11,10 @@ use Illuminate\View\View;
 
 /**
  * Vulnerable Login Controller
- * 
+ *
  * ⚠️ PERINGATAN: Controller ini SENGAJA TIDAK AMAN!
  * Hanya untuk pembelajaran - JANGAN gunakan di production!
- * 
+ *
  * VULNERABILITIES:
  * 1. ❌ Tidak ada rate limiting
  * 2. ❌ Tidak ada session regeneration
@@ -43,7 +43,7 @@ class VulnerableLoginController extends Controller
 
     /**
      * Handle vulnerable login request.
-     * 
+     *
      * ❌ VULNERABLE POINTS:
      * 1. Tidak ada rate limiting - bisa brute force unlimited
      * 2. Password comparison plaintext
@@ -101,7 +101,7 @@ class VulnerableLoginController extends Controller
 
     /**
      * Vulnerable logout
-     * 
+     *
      * ❌ VULNERABLE: Session tidak di-invalidate dengan benar
      */
     public function destroy(Request $request): RedirectResponse
@@ -120,7 +120,7 @@ class VulnerableLoginController extends Controller
     /**
      * Vulnerable dashboard
      */
-    public function dashboard(Request $request): View
+    public function dashboard(Request $request): mixed
     {
         $user = $request->session()->get('vulnerable_user');
 
@@ -140,7 +140,7 @@ class VulnerableLoginController extends Controller
     public function bruteForceStats(Request $request): View
     {
         $email = $request->input('email', '');
-        
+
         $attempts = LoginAttempt::vulnerable()
             ->where('email', 'like', "%{$email}%")
             ->latest()
